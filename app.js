@@ -14,7 +14,7 @@ app.use(
   cors({
     credentials: true,
     origin: "https://platforma-frontend.vercel.app", // Frontend URL
-    methods: "GET,POST",
+    methods: ["GET", "POST", "OPTIONS"], // Incluir OPTIONS para o preflight request
     allowedHeaders: ["Content-Type", "Authorization"], // Adicionando explicitamente o header Authorization
   })
 );
