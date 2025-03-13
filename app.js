@@ -8,39 +8,30 @@ const studentRoutes = require("./routes/StudentRoutes");
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
+// Configuração do CORS
+const corsOptions = {
+  origin: "https://platforma-frontend.vercel.app",
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders:
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+};
 
-app.use(
-  cors({
-    origin: "https://platforma-frontend.vercel.app",
-    credentials: true,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders:
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-  })
-);
+// Usar CORS globalmente com as opções definidas
+app.use(cors(corsOptions));
 
+// Middleware para logar os cabeçalhos de resposta
 app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://platforma-frontend.vercel.app"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.header("Access-Control-Allow-Credentials", "true");
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204);
-  }
-
+  res.on("finish", () => {
+    console.log("Resposta CORS: ", res.getHeaders()); // Loga os cabeçalhos da resposta
+  });
   next();
 });
 
-// Responde a todas as requisições OPTIONS (preflight)
-app.options("*", cors());
+// Responde a todas as requisições OPTIONS (preflight) com as mesmas opções de CORS
+app.options("*", cors(corsOptions));
+
+app.use(express.json());
 
 // Conectar ao banco antes de iniciar o servidor
 conn()
