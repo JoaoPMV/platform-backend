@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173", // Frontend URL
+    origin: "https://platforma-frontend.vercel.app", // Frontend URL
     methods: "GET,POST",
     allowedHeaders: ["Content-Type", "Authorization"], // Adicionando explicitamente o header Authorization
   })
