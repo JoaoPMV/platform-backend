@@ -19,6 +19,9 @@ app.use(
   })
 );
 
+// Responde a todas as requisições OPTIONS (preflight)
+app.options("*", cors()); // Respondendo a todas as requisições OPTIONS
+
 // Conectar ao banco antes de iniciar o servidor
 conn()
   .then(() => {
