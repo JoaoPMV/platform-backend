@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const dbURL = process.env.MONGO_URI;
+const dbPass = process.env.DB_PASS;
+const dbUser = process.env.DB_USER;
 
 const conn = async () => {
   try {
