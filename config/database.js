@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const dbUser = process.env.DB_USER;
-const dbPass = process.env.DB_PASS;
-const dbURL = `mongodb+srv://${dbUser}:${dbPass}@cluster0.3ximk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const dbURL = process.env.MONGO_URI;
 
 const conn = async () => {
   try {
