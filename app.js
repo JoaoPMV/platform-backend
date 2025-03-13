@@ -12,12 +12,15 @@ app.use(express.json());
 
 app.use(
   cors({
+    origin: "https://platforma-frontend.vercel.app",
     credentials: true,
-    origin: "https://platforma-frontend.vercel.app", // Frontend URL
-    methods: ["GET", "POST", "OPTIONS"], // Incluir OPTIONS para o preflight request
-    allowedHeaders: ["Content-Type", "Authorization"], // Adicionando explicitamente o header Authorization
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders:
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   })
 );
+
+app.options("*", cors());
 
 // Responde a todas as requisições OPTIONS (preflight)
 app.options("*", cors()); // Respondendo a todas as requisições OPTIONS
