@@ -8,9 +8,7 @@ const dbURL = `mongodb+srv://${dbUser}:${dbPass}@cluster0.3ximk.mongodb.net/?ret
 const conn = async () => {
   try {
     const dbConn = await mongoose.connect(dbURL);
-
     console.log("🔥 Banco de dados conectado com sucesso!");
-
     return dbConn;
   } catch (error) {
     console.error("❌ Erro ao conectar ao banco de dados:", error.message);
