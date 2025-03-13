@@ -20,10 +20,27 @@ app.use(
   })
 );
 
-app.options("*", cors());
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://platforma-frontend.vercel.app"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
 
 // Responde a todas as requisições OPTIONS (preflight)
-app.options("*", cors()); // Respondendo a todas as requisições OPTIONS
+app.options("*", cors());
 
 // Conectar ao banco antes de iniciar o servidor
 conn()
