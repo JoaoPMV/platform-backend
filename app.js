@@ -8,14 +8,18 @@ const studentRoutes = require("./routes/StudentRoutes");
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Configuração do CORS
+const cors = require("cors");
+
+// Configuração do CORS mais permissiva
 const corsOptions = {
-  origin: ["https://platforma-frontend.vercel.app"],
+  origin: "*", // Permite todas as origens
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders:
     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
 };
+
+app.use(cors(corsOptions));
 
 // Usar CORS globalmente com as opções definidas
 app.use(cors(corsOptions));
