@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 
 // Configuração do CORS
 const corsOptions = {
-  origin: "https://platforma-frontend.vercel.app",
+  origin: ["https://platforma-frontend.vercel.app"],
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders:
@@ -20,23 +20,17 @@ const corsOptions = {
 // Usar CORS globalmente com as opções definidas
 app.use(cors(corsOptions));
 
-// Middleware para logar os cabeçalhos de resposta
+// Middleware para garantir que as credenciais sejam permitidas
 app.use((req, res, next) => {
-  res.on("finish", () => {
-    console.log("Resposta CORS: ", res.getHeaders()); // Loga os cabeçalhos da resposta
-  });
+  res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
-
-// Responde a todas as requisições OPTIONS (preflight) com as mesmas opções de CORS
-app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
 // Conectar ao banco antes de iniciar o servidor
 conn()
   .then(() => {
-    // Registrar as rotas após a conexão com o banco
     app.use("/api/students", studentRoutes);
     app.listen(port, () => {
       console.log(`🚀 Servidor rodando na porta ${port}`);
