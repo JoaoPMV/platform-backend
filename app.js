@@ -20,6 +20,9 @@ const corsOptions = {
 // Aplicar o middleware CORS globalmente
 app.use(cors(corsOptions));
 
+// Responder a requisições OPTIONS para todas as rotas
+app.options("*", cors(corsOptions));
+
 app.use(express.json());
 
 // Conectar ao banco antes de iniciar o servidor
