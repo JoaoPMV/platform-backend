@@ -10,7 +10,6 @@ const app = express();
 // Configuração do CORS
 const corsOptions = {
   origin: [
-    "http://localhost:5173", // Frontend local (ajuste se necessário)
     "https://platforma-frontend.vercel.app", // Frontend em produção
   ],
   credentials: true,

@@ -3,11 +3,11 @@
   "routes": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/$1.js"
+      "destination": "/backend/api/$1.js"
     },
     {
       "source": "/(.*)",
-      "destination": "/app.js"
+      "destination": "/backend/app.js"
     }
   ]
 }
