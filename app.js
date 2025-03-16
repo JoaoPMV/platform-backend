@@ -31,7 +31,9 @@ app.use(express.json());
 conn()
   .then(() => {
     app.use("/api/students", studentRoutes);
-    console.log(`Banco de dados conectado com sucesso!`);
+    app.listen(3003, () => {
+      console.log("Servidor rodando na porta 3003");
+    });
   })
   .catch((err) => {
     console.error("Não foi possível iniciar o servidor:", err);
