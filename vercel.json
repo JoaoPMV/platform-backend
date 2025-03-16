@@ -2,12 +2,12 @@
   "version": 2,
   "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/backend/api/$1.js"
+      "src": "/api/(.*)",
+      "dest": "/backend/api/$1.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "/backend/app.js"
+      "src": "/(.*)",
+      "dest": "/backend/app.js"
     }
   ]
 }
