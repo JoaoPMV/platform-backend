@@ -6,7 +6,6 @@ const conn = require("./config/database");
 const studentRoutes = require("./routes/StudentRoutes");
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 // Configuração do CORS
 const corsOptions = {
@@ -32,10 +31,11 @@ app.use(express.json());
 conn()
   .then(() => {
     app.use("/api/students", studentRoutes);
-    app.listen(port, () => {
-      console.log(`🚀 Servidor rodando na porta ${port}`);
-    });
+    console.log(`Banco de dados conectado com sucesso!`);
   })
   .catch((err) => {
-    console.error("❌ Não foi possível iniciar o servidor:", err);
+    console.error("Não foi possível iniciar o servidor:", err);
   });
+
+// Expor o app para o Vercel gerenciar
+module.exports = app;
