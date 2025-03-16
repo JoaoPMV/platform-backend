@@ -10,8 +10,11 @@ const port = process.env.PORT || 3000;
 
 // Configuração do CORS
 const corsOptions = {
-  origin: "https://platforma-frontend.vercel.app", // Especifica a origem do seu frontend
-  credentials: true, // Permite credenciais
+  origin: [
+    "http://localhost:5173", // Frontend local (ajuste se necessário)
+    "https://platforma-frontend.vercel.app", // Frontend em produção
+  ],
+  credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders:
     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
