@@ -19,7 +19,7 @@ const corsOptions = {
 // Aplicar o middleware CORS globalmente
 app.use(cors(corsOptions));
 
-// Responder a requisições OPTIONS para todas as rotas
+// Middleware para responder às requisições OPTIONS
 app.options("*", cors(corsOptions));
 
 app.use(express.json());
