@@ -9,13 +9,11 @@ const app = express();
 
 // Configuração do CORS
 const corsOptions = {
-  origin: [
-    "https://platforma-frontend.vercel.app", // Frontend em produção
-  ],
-  credentials: true,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  origin: "https://platforma-frontend.vercel.app", // Frontend em produção
+  credentials: true, // Permite enviar cookies e tokens entre frontend e backend
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Métodos permitidos
   allowedHeaders:
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization", // Cabeçalhos permitidos
 };
 
 // Aplicar o middleware CORS globalmente
