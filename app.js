@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const conn = require("./config/database");
 const studentRoutes = require("./routes/StudentRoutes");
+const PORTA = process.env.PORT || 3000;
 
 const app = express();
 
@@ -29,15 +30,14 @@ app.get("/", (req, res) => {
   res.send("Backend funcionando!");
 });
 
-app.get("/check-ip", (req, res) => {
-  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  res.json({ ip });
-});
-
 // Conectar ao banco antes de iniciar o servidor
 conn()
   .then(() => {
     app.use("/api/students", studentRoutes);
+    // Iniciar o servidor após a conexão com o banco de dados
+    app.listen(PORTA, () => {
+      console.log(`Servidor rodando na porta ${PORTA}`);
+    });
   })
   .catch((err) => {
     console.error("Não foi possível iniciar o servidor:", err);
