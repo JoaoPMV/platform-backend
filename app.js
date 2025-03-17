@@ -10,7 +10,10 @@ const app = express();
 
 // Configuração do CORS
 const corsOptions = {
-  origin: "https://platforma-frontend.vercel.app",
+  origin: [
+    "https://platforma-frontend.vercel.app", // Frontend na Vercel
+    "http://localhost:5173", // Frontend local na porta 5173
+  ],
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders:
@@ -26,6 +29,7 @@ app.use(express.json());
 conn()
   .then(() => {
     app.use("/api/students", studentRoutes);
+    console.log("Rotas configuradas com sucesso!"); // Adicione isso para garantir
 
     app.listen(PORTA, () => {
       console.log(`Servidor rodando na porta ${PORTA}`);
