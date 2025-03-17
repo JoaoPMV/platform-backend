@@ -19,5 +19,8 @@
       "src": "/(.*)",
       "dest": "/frontend/$1"
     }
-  ]
+  ],
+  "env": {
+    "VITE_APP_URL": "https://platforma-backend.vercel.app"
+  }
 }
