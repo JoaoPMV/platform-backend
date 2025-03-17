@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const conn = require("./config/database");
+const conn = require("./config/database"); // A conexão com o banco é importada
 const studentRoutes = require("./routes/StudentRoutes");
 const PORTA = process.env.PORT || 3000;
 
@@ -25,19 +25,18 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 app.use(express.json());
 
-// Conectar ao banco antes de iniciar o servidor
-conn()
-  .then(() => {
-    app.use("/api/students", studentRoutes);
-    console.log("Rotas configuradas com sucesso!"); // Adicione isso para garantir
+// Conectar ao banco de dados, mas sem bloquear o servidor
+conn().catch((err) => {
+  console.error("Erro ao conectar ao banco de dados:", err.message);
+});
 
-    app.listen(PORTA, () => {
-      console.log(`Servidor rodando na porta ${PORTA}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Não foi possível conectar ao banco de dados:", err);
-  });
+// Configuração de rotas
+app.use("/api/students", studentRoutes);
+
+// Iniciar o servidor
+app.listen(PORTA, () => {
+  console.log(`Servidor rodando na porta ${PORTA}`);
+});
 
 // Expor o app para o Vercel gerenciar
 module.exports = app;
