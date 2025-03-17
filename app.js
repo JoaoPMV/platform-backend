@@ -24,6 +24,11 @@ app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
+// Definir uma rota para "/"
+app.get("/", (req, res) => {
+  res.send("Backend funcionando!");
+});
+
 // Conectar ao banco antes de iniciar o servidor
 conn()
   .then(() => {
