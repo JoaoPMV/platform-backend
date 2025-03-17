@@ -2,25 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "backend/api/*.js",
+      "src": "backend/app.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/students/(.*)",
-      "dest": "/backend/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/$1"
+      "src": "/api/(.*)",
+      "dest": "/backend/$1"
     }
-  ],
-  "env": {
-    "VITE_APP_URL": "https://platforma-backend.vercel.app"
-  }
+  ]
 }
