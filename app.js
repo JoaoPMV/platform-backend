@@ -8,6 +8,12 @@ const PORTA = process.env.PORT || 3000;
 
 const app = express();
 
+app.use("/api/students", studentRoutes);
+// Iniciar o servidor após a conexão com o banco de dados
+app.listen(PORTA, () => {
+  console.log(`Servidor rodando na porta ${PORTA}`);
+});
+
 // Configuração do CORS
 const corsOptions = {
   origin: "https://platforma-frontend.vercel.app", // Frontend em produção
@@ -27,13 +33,7 @@ app.use(express.json());
 
 // Conectar ao banco antes de iniciar o servidor
 conn()
-  .then(() => {
-    app.use("/api/students", studentRoutes);
-    // Iniciar o servidor após a conexão com o banco de dados
-    app.listen(PORTA, () => {
-      console.log(`Servidor rodando na porta ${PORTA}`);
-    });
-  })
+  .then(() => {})
   .catch((err) => {
     console.error("Não foi possível iniciar o servidor:", err);
   });
