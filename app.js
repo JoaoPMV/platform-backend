@@ -29,6 +29,11 @@ app.get("/", (req, res) => {
   res.send("Backend funcionando!");
 });
 
+app.get("/check-ip", (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  res.json({ ip });
+});
+
 // Conectar ao banco antes de iniciar o servidor
 conn()
   .then(() => {
