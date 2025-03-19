@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.get("/home", PlatformController.home);
 router.post("/register", StudentController.register);
+router.delete("/deletar", StudentController.delete);
 
 // Rota para login
 router.post("/login", StudentController.login);

@@ -17,8 +17,6 @@ class StudentController {
           .json({ message: "Todos os campos são obrigatórios!" });
       }
 
-      console.log("✅ Dados recebidos corretamente, verificando e-mail...");
-
       // Verifica se já existe um estudante com esse email
       const studentExists = await StudentService.findStudentByEmail(email);
       if (studentExists) {
@@ -62,7 +60,7 @@ class StudentController {
 
       const student = await StudentService.findStudentByEmail(email);
       if (!student) {
-        console.log("⚠️ Estudante não encontrado!");
+        console.log("Estudante não encontrado!");
         return res.status(404).json({ message: "Estudante não encontrado!" });
       }
 
@@ -90,6 +88,33 @@ class StudentController {
       return res
         .status(500)
         .json({ message: "Erro no servidor!", error: error.message });
+    }
+  }
+
+  static async delete(req, res) {
+    try {
+      // Verifica se o corpo da requisição é um JSON válido
+      JSON.parse(JSON.stringify(req.body));
+
+      const { email } = req.body;
+
+      // Buscar estudante pelo e-mail
+      const student = await StudentService.findStudentByEmail(email);
+      if (!student) {
+        console.log("Estudante não encontrado!");
+        return res.status(404).json({ message: "Estudante não encontrado!" });
+      }
+
+      // Deletar estudante
+      await StudentService.deleteStudentByEmail(email);
+      return res
+        .status(200)
+        .json({ message: "Estudante deletado com sucesso!" });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .json({ message: "Erro ao tentar deletar o estudante!" });
     }
   }
 }

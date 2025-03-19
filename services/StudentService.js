@@ -31,6 +31,19 @@ class StudentService {
   static async checkPassword(plainPassword, hashedPassword) {
     return await bcrypt.compare(plainPassword, hashedPassword);
   }
+
+  // Função para deletar estudante por e-mail
+  static async deleteStudentByEmail(email) {
+    try {
+      const result = await Student.deleteOne({ email });
+      if (result.deletedCount === 0) {
+        throw new Error("Estudante não encontrado para deletar.");
+      }
+      return result;
+    } catch (error) {
+      throw new Error("Erro ao tentar deletar estudante: " + error.message);
+    }
+  }
 }
 
 module.exports = StudentService;
