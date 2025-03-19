@@ -1,31 +1,31 @@
 const jwt = require("jsonwebtoken");
+const Student = require("../models/StudentModel");
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   const token = req.header("Authorization");
 
-  console.log("Headers recebidos no middleware:", req.headers); // Exibe todos os headers
-  console.log("Token recebido:", token); // Exibe o token recebido
-
-  // Verifica se o token existe
   if (!token) {
     return res
       .status(401)
       .json({ message: "Acesso negado. Nenhum token fornecido." });
   }
 
-  // Se o token começa com "Bearer ", removemos o prefixo
   const tokenWithoutBearer = token.startsWith("Bearer ")
     ? token.replace("Bearer ", "")
     : token;
 
   try {
-    // Verificando o token com a chave secreta
     const decoded = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET);
-    console.log("Token validado:", decoded); // Exibe o token validado
-    req.user = decoded; // Passando os dados do usuário para a requisição
-    next(); // Segue para a próxima função ou rota
+    const student = await Student.findById(decoded.id);
+
+    if (!student) {
+      return res.status(401).json({ message: "Usuário não encontrado." });
+    }
+
+    req.user = decoded;
+    next();
   } catch (error) {
-    console.error("Erro na validação do token:", error); // Log para erro de token
+    console.error("Erro na validação do token:", error);
     return res.status(403).json({ message: "Token inválido." });
   }
 };
