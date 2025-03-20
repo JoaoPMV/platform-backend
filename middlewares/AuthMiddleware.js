@@ -27,8 +27,8 @@ const authMiddleware = async (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    console.error("Erro na validação do token:", error);
-    return res.status(403).json({ message: "Token inválido." });
+    console.error("Erro na validação do token:", error.message);
+    return res.status(403).json({ message: "Token inválido ou expirado." });
   }
 };
 
