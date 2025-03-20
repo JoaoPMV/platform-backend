@@ -16,9 +16,11 @@ const authMiddleware = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET);
-    const student = await Student.findById(decoded.id);
 
-    if (!student) {
+    // Verifica se o ID ainda existe no banco
+    const studentExists = await Student.exists({ _id: decoded.id });
+
+    if (!studentExists) {
       return res.status(401).json({ message: "Usuário não encontrado." });
     }
 

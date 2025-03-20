@@ -97,14 +97,12 @@ class StudentController {
       JSON.parse(JSON.stringify(req.body));
 
       const { email } = req.body;
-
       // Buscar estudante pelo e-mail
       const student = await StudentService.findStudentByEmail(email);
       if (!student) {
         console.log("Estudante não encontrado!");
         return res.status(404).json({ message: "Estudante não encontrado!" });
       }
-
       // Deletar estudante
       await StudentService.deleteStudentByEmail(email);
       return res
